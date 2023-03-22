@@ -16,7 +16,6 @@ PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func, PRINT_FUNC pr
 {
     PAdptArray arr = (PAdptArray)malloc(sizeof(AdptArray));
     if (arr == NULL) return NULL;
-
     arr->size = 0;
     arr->capacity = 10;
     arr->elements = (PElement*)calloc(arr->capacity, sizeof(PElement));
@@ -25,7 +24,6 @@ PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func, PRINT_FUNC pr
         free(arr);
         return NULL;
     }
-
     arr->copy_func = copy_func;
     arr->del_func = del_func;
     arr->print_func = print_func;
@@ -35,8 +33,6 @@ PAdptArray CreateAdptArray(COPY_FUNC copy_func, DEL_FUNC del_func, PRINT_FUNC pr
 void DeleteAdptArray(PAdptArray arr)
 {
     if (arr == NULL) return;
-    
-
     for (int i = 0; i < arr->size; i++)
     {
         if (arr->elements[i] != NULL)
@@ -44,7 +40,6 @@ void DeleteAdptArray(PAdptArray arr)
             arr->del_func(arr->elements[i]);
         }
     }
-
     free(arr->elements);
     free(arr);
 }
@@ -55,7 +50,6 @@ Result SetAdptArrayAt(PAdptArray arr, int index, PElement element)
     {
         return FAIL;
     }
-
     if (index >= arr->size)
     {
         for (int i = arr->size; i <= index; i++)
@@ -64,14 +58,11 @@ Result SetAdptArrayAt(PAdptArray arr, int index, PElement element)
         }
         arr->size = index + 1;
     }
-
     if (arr->elements[index] != NULL)
     {
         arr->del_func(arr->elements[index]);
     }
-
     arr->elements[index] = arr->copy_func(element);
-
     return SUCCESS;
 }
 
@@ -81,7 +72,6 @@ PElement GetAdptArrayAt(PAdptArray arr, int index)
     {
         return NULL;
     }
-
     return arr->elements[index];
 }
 
@@ -91,14 +81,12 @@ int GetAdptArraySize(PAdptArray arr)
     {
         return -1;
     }
-
     return arr->size;
 }
 
 void PrintDB(PAdptArray arr)
 {
     if (arr == NULL || arr->print_func == NULL) return;
-
     for (int i = 0; i < arr->size; i++)
     {
         printf("Element %d: ", i);
